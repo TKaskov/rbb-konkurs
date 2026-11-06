@@ -122,8 +122,7 @@
   }
 
   async function run(task, texts) {
-    const { open, wait, reducedMotion } = window.RBBStage;
-    if (reducedMotion()) return task;
+    const { open, wait } = window.RBBStage;
 
     const stage = open('fx-drum');
     const view = buildScene(texts);

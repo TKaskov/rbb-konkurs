@@ -4,10 +4,6 @@
 
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-  function reducedMotion() {
-    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  }
-
   function open(className) {
     const root = document.createElement('div');
     root.className = 'fx ' + className;
@@ -50,5 +46,5 @@
     return Object.freeze({ root, confetti, holdOrTap, close });
   }
 
-  window.RBBStage = Object.freeze({ open, wait, reducedMotion });
+  window.RBBStage = Object.freeze({ open, wait });
 })();

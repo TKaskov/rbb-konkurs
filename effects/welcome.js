@@ -31,8 +31,8 @@
   }
 
   async function run(texts) {
-    const { open, wait, reducedMotion } = window.RBBStage;
-    if (running || reducedMotion()) return;
+    const { open, wait } = window.RBBStage;
+    if (running) return;
     running = true;
     try {
       const stage = open('fx-welcome');
