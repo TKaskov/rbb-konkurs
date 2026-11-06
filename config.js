@@ -2,7 +2,7 @@
 window.RBB_CONFIG = Object.freeze({
   // URL веб-застосунку Google Apps Script (див. ІНСТРУКЦІЯ.md, крок 1).
   // Поки порожньо — сторінка працює в ДЕМО-режимі: номери зберігаються лише на цьому телефоні.
-  apiUrl: 'https://sign-expect-harbor-collecting.trycloudflare.com',
+  apiUrl: 'https://consequently-lexmark-fireplace-approve.trycloudflare.com',
 
   // Акаунти, на які треба підписатись. Порядок = порядок у списку.
   accounts: Object.freeze([
