@@ -1,0 +1,297 @@
+/* ---------- shared overlay ---------- */
+
+html.fx-lock,
+html.fx-lock body { overflow: hidden; }
+
+.fx {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: radial-gradient(circle at 50% 40%, #9aa06c 0%, var(--olive) 42%, var(--olive-deep) 100%);
+  color: var(--cream);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.fx.is-open { opacity: 1; }
+.fx.is-closing { opacity: 0; }
+
+.fx-confetti {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.fx-label {
+  position: relative;
+  z-index: 1;
+  margin: 8px 0 0;
+  font: italic 500 26px/1.2 var(--serif);
+  color: var(--gold-3);
+  text-align: center;
+}
+
+.fx-skip {
+  position: relative;
+  z-index: 1;
+  margin: 14px 0 0;
+  font: 400 11px/1 var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.6s;
+}
+.fx.is-done .fx-skip { opacity: 0.7; }
+
+/* ---------- drum ---------- */
+
+.drum-scene {
+  position: relative;
+  z-index: 1;
+  width: 300px;
+  height: 380px;
+  perspective: 900px;
+}
+
+.drum-rig {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  transform-style: preserve-3d;
+  transform: rotateX(-14deg) rotateY(-28deg);
+}
+
+.drum {
+  position: absolute;
+  transform-style: preserve-3d;
+}
+
+.drum-face {
+  position: absolute;
+  left: -90px;
+  top: 0;
+  width: 180px;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, rgba(184, 149, 74, 0.55), rgba(248, 244, 192, 0.35) 50%, rgba(184, 149, 74, 0.55));
+  border-top: 1px solid var(--gold-2);
+  border-bottom: 1px solid var(--gold-1);
+  border-left: 3px solid var(--gold-2);
+  border-right: 3px solid var(--gold-2);
+}
+
+.drum-cap {
+  position: absolute;
+  left: -70px;
+  top: -70px;
+  width: 140px;
+  height: 140px;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 4px solid var(--gold-2);
+  background:
+    radial-gradient(circle, var(--gold-3) 0 9px, var(--gold-1) 10px 13px, transparent 14px),
+    repeating-conic-gradient(rgba(227, 207, 134, 0.85) 0 4deg, transparent 4deg 45deg),
+    radial-gradient(circle, rgba(248, 244, 192, 0.18), rgba(184, 149, 74, 0.3));
+}
+.drum-cap-left { transform: translateX(-90px) rotateY(90deg); }
+.drum-cap-right { transform: translateX(90px) rotateY(90deg); }
+
+.drum-slip {
+  position: absolute;
+  left: -12px;
+  top: -7px;
+  width: 24px;
+  height: 14px;
+  background: var(--cream);
+  border: 1px solid var(--gold-1);
+  border-radius: 2px;
+}
+
+.drum-leg {
+  position: absolute;
+  left: -65px;
+  top: 0;
+  width: 130px;
+  height: 125px;
+  background: linear-gradient(180deg, var(--gold-3), var(--gold-1));
+  clip-path: polygon(46% 0, 54% 0, 100% 100%, 91% 100%, 50% 9%, 9% 100%, 0 100%);
+}
+.drum-leg-left { transform: translateX(-104px) rotateY(90deg); }
+.drum-leg-right { transform: translateX(104px) rotateY(90deg); }
+
+.drum-axle {
+  position: absolute;
+  left: -112px;
+  top: -3px;
+  width: 224px;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--gold);
+}
+
+.drum-shadow {
+  position: absolute;
+  left: 50%;
+  top: calc(62% + 112px);
+  width: 260px;
+  height: 40px;
+  margin-left: -130px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(47, 50, 31, 0.45), transparent);
+}
+
+/* ---------- ticket ---------- */
+
+.ticket3d {
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 210px;
+  height: 124px;
+  margin: -62px 0 0 -105px;
+  transform-style: preserve-3d;
+  transform: translateY(0) scale(0.15);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.15), opacity 0.25s ease;
+}
+.fx.is-out .ticket3d {
+  opacity: 1;
+  transform: translateY(-150px) translateZ(60px) scale(1);
+}
+
+.ticket3d-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.3, 0.7, 0.2, 1);
+}
+.fx.is-flipped .ticket3d-inner { transform: rotateY(180deg); }
+
+.ticket3d-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 18px 40px rgba(47, 50, 31, 0.45);
+}
+
+.ticket3d-front {
+  background: linear-gradient(145deg, var(--olive-deep), #3d4128);
+  border: 2px solid var(--gold-2);
+}
+.ticket3d-front img { width: 64%; height: auto; }
+
+.ticket3d-back {
+  transform: rotateY(180deg);
+  background: var(--cream);
+  border: 2px solid var(--gold-1);
+  outline: 1px dashed var(--gold-1);
+  outline-offset: -8px;
+  color: var(--olive-deep);
+}
+
+.ticket3d-number {
+  margin: 0;
+  font: 600 60px/1 var(--serif);
+  font-variant-numeric: lining-nums;
+}
+.ticket3d-no { font-size: 26px; margin-right: 4px; color: var(--gold-1); }
+
+.ticket3d-who {
+  margin: 6px 0 0;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font: 500 13px/1.2 var(--sans);
+  color: var(--ink);
+}
+
+/* ---------- welcome card (nickname entered) ---------- */
+
+.welcome-scene {
+  position: relative;
+  z-index: 1;
+  perspective: 1000px;
+}
+
+.welcome-card {
+  position: relative;
+  width: min(300px, 80vw);
+  box-sizing: border-box;
+  padding: 26px 22px 24px;
+  overflow: hidden;
+  text-align: center;
+  border-radius: 18px;
+  border: 1.5px solid var(--gold-2);
+  background: linear-gradient(145deg, var(--olive-deep), #3d4128);
+  box-shadow: 0 24px 60px rgba(47, 50, 31, 0.5);
+  animation: welcome-in 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.fx.is-landed .welcome-card { animation: welcome-float 3s ease-in-out infinite; }
+
+.welcome-logo { width: 120px; height: auto; }
+
+.welcome-hello {
+  margin: 12px 0 0;
+  font: 500 11px/1 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-3);
+}
+
+.welcome-who {
+  margin: 10px 0 0;
+  font: 600 34px/1.1 var(--serif);
+  overflow-wrap: anywhere;
+  background: var(--gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome-next {
+  margin: 12px 0 0;
+  font: 400 13px/1.4 var(--sans);
+  color: var(--cream);
+  opacity: 0.85;
+}
+
+.welcome-shine {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, transparent 35%, rgba(248, 244, 192, 0.5) 50%, transparent 65%);
+  transform: translateX(-120%);
+}
+.fx.is-landed .welcome-shine { animation: welcome-shine 1s ease forwards; }
+
+@keyframes welcome-in {
+  0% { opacity: 0; transform: translateZ(-400px) rotateX(30deg) rotateY(-540deg) scale(0.3); }
+  40% { opacity: 1; }
+  100% { opacity: 1; transform: translateZ(0) rotateX(0) rotateY(0) scale(1); }
+}
+
+@keyframes welcome-float {
+  0%, 100% { transform: rotateX(0) rotateY(0) translateY(0); }
+  50% { transform: rotateX(6deg) rotateY(-9deg) translateY(-6px); }
+}
+
+@keyframes welcome-shine {
+  to { transform: translateX(120%); }
+}

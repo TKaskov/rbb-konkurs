@@ -32,6 +32,11 @@ window.RBB_TEXTS = Object.freeze({
     networkError: 'Не вдалося зʼєднатися. Перевірте інтернет і спробуйте ще раз.',
     closed: 'Реєстрацію завершено. Дякуємо!',
     demo: 'ДЕМО-режим: номери не зберігаються на сервері',
+    welcomeHello: 'Вітаємо в конкурсі',
+    welcomeNext: 'Далі — підписки на партнерів',
+    drumSpinning: 'Крутимо барабан…',
+    drumDone: 'Твій номер у барабані!',
+    tapToContinue: 'Натисни, щоб продовжити',
   }),
   pl: Object.freeze({
     eyebrow: 'Losowanie nagród',
@@ -65,5 +70,10 @@ window.RBB_TEXTS = Object.freeze({
     networkError: 'Brak połączenia. Sprawdź internet i spróbuj ponownie.',
     closed: 'Rejestracja zakończona. Dziękujemy!',
     demo: 'Tryb DEMO: numery nie są zapisywane na serwerze',
+    welcomeHello: 'Witamy w konkursie',
+    welcomeNext: 'Teraz — obserwuj partnerów',
+    drumSpinning: 'Kręcimy bębnem…',
+    drumDone: 'Twój numer jest w bębnie!',
+    tapToContinue: 'Dotknij, aby kontynuować',
   }),
 });

@@ -200,6 +200,15 @@
     showError('#handle-error', '');
     setState({ handle, number: null, existing: false });
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (window.RBBWelcome) {
+      window.RBBWelcome.run({ hello: t('welcomeHello'), who: '@' + handle, next: t('welcomeNext') }).catch(() => undefined);
+    }
+  }
+
+  function withDrum(task) {
+    if (!window.RBBDrum) return task;
+    const texts = { spinning: t('drumSpinning'), done: t('drumDone'), skip: t('tapToContinue'), who: '@' + state.handle };
+    return window.RBBDrum.run(task, texts);
   }
 
   async function onGetNumber() {
@@ -208,7 +217,8 @@
     showError('#register-error', '');
     renderAccounts();
     try {
-      const result = isDemo ? registerDemo(state.handle) : await registerRemote(state.handle);
+      const task = isDemo ? Promise.resolve().then(() => registerDemo(state.handle)) : registerRemote(state.handle);
+      const result = await withDrum(task);
       busy = false;
       setState({ number: result.number, existing: Boolean(result.existing) });
       window.scrollTo({ top: 0, behavior: 'smooth' });
