@@ -107,6 +107,16 @@
     const avatar = document.createElement('span');
     avatar.className = 'avatar';
     avatar.textContent = account.handle.replace(/^[._]+/, '').charAt(0);
+    const photo = document.createElement('img');
+    photo.className = 'avatar-img';
+    photo.src = 'avatars/' + encodeURIComponent(account.handle) + '.jpg';
+    photo.alt = '';
+    photo.width = 40;
+    photo.height = 40;
+    photo.decoding = 'async';
+    // якщо фото не завантажилось — лишається перша літера
+    photo.addEventListener('error', () => photo.remove());
+    avatar.append(photo);
 
     const info = document.createElement('span');
     info.className = 'account-info';
