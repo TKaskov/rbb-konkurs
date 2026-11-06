@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Постер з QR · Конкурс Rox Beauty Bar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    @page { size: A4; margin: 0; }
+    body { background: #d9d6c7; }
+    .controls {
+      max-width: 210mm;
+      margin: 16px auto;
+      padding: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--ink);
+    }
+    .controls label { width: 100%; }
+    .controls input { flex: 1; min-width: 220px; padding: 10px; border: 1px solid #999; border-radius: 8px; font: inherit; }
+    .controls button { padding: 10px 16px; border: 0; border-radius: 8px; background: var(--olive-deep); color: var(--cream); font: inherit; cursor: pointer; }
+    .sheet {
+      width: 210mm;
+      height: 297mm;
+      margin: 0 auto 24px;
+      background: radial-gradient(120% 60% at 50% -5%, #9aa06e 0%, transparent 60%), var(--olive);
+      color: var(--cream);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 22mm 18mm;
+      overflow: hidden;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .sheet::before {
+      content: '';
+      position: absolute;
+      inset: 8mm;
+      border: 1px solid var(--gold-2);
+      opacity: .7;
+    }
+    .sheet .logo { width: 90mm; margin-bottom: 10mm; }
+    .sheet .eyebrow { font-size: 13pt; }
+    /* градієнтний текст ламається при друці в PDF — на постері суцільне золото */
+    .sheet .title { font-size: 64pt; margin-top: 3mm; background: none; color: var(--gold-2); }
+    .sheet .subtitle { font-size: 20pt; }
+    .qr-box {
+      margin: 12mm 0 8mm;
+      padding: 7mm;
+      background: var(--cream);
+      border-radius: 6mm;
+      box-shadow: inset 0 0 0 1.5mm var(--gold-2);
+    }
+    .qr-box img, .qr-box svg { display: block; width: 78mm; height: 78mm; }
+    .scan { font: 500 12pt var(--sans); letter-spacing: .3em; text-transform: uppercase; margin: 0; }
+    .steps { margin-top: 7mm; font: italic 500 17pt/1.5 var(--serif); }
+    .handle { position: absolute; bottom: 14mm; left: 0; right: 0; font-size: 11pt; letter-spacing: .2em; opacity: .9; }
+    @media print {
+      body { background: none; }
+      .controls { display: none; }
+      .sheet { margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <label for="url">Посилання на сторінку конкурсу (QR оновлюється автоматично):</label>
+    <input id="url" type="url">
+    <button type="button" onclick="window.print()">Друкувати / зберегти PDF</button>
+  </div>
+
+  <section class="sheet">
+    <img class="logo" src="logo-gold.png" alt="Rox Beauty Bar" width="1000" height="619">
+    <p class="eyebrow">Розіграш подарунків · Losowanie nagród</p>
+    <h1 class="title">Конкурс</h1>
+    <p class="subtitle">від Rox Beauty Bar та партнерів</p>
+    <div class="qr-box" id="qr"></div>
+    <p class="scan">Скануй · Skanuj</p>
+    <p class="steps">Вкажи Instagram → підпишись → отримай номер<br>Podaj Instagram → obserwuj → odbierz numer</p>
+    <p class="handle">@rox.beauty.bar</p>
+  </section>
+
+  <script src="vendor/qrcode.js"></script>
+  <script>
+    (function () {
+      const input = document.getElementById('url');
+      const box = document.getElementById('qr');
+      const params = new URLSearchParams(location.search);
+      const defaultUrl = new URL('./', location.href).href;
+      input.value = params.get('url') || defaultUrl;
+
+      function draw() {
+        const value = input.value.trim();
+        if (!value || typeof qrcode !== 'function') {
+          box.textContent = 'QR';
+          return;
+        }
+        const qr = qrcode(0, 'M');
+        qr.addData(value);
+        qr.make();
+        box.innerHTML = qr.createSvgTag({ cellSize: 8, margin: 0, scalable: true })
+          .replace('fill="black"', 'fill="#4f5434"');
+      }
+
+      input.addEventListener('input', draw);
+      draw();
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#848a5c">
+  <title>Конкурс · Rox Beauty Bar</title>
+  <link rel="icon" href="logo-gold.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="lang" role="group" aria-label="Мова / Język">
+    <button type="button" data-lang="uk">UA</button>
+    <button type="button" data-lang="pl">PL</button>
+  </div>
+
+  <main class="page">
+    <header class="brand">
+      <img class="logo" src="logo-gold.png" alt="Rox Beauty Bar" width="1000" height="619">
+      <p class="eyebrow" data-t="eyebrow"></p>
+      <h1 class="title" data-t="title"></h1>
+      <p class="subtitle" data-t="subtitle"></p>
+    </header>
+
+    <p class="demo" id="demo" hidden data-t="demo"></p>
+
+    <!-- Крок 1: нік -->
+    <section class="card step" id="step-handle">
+      <h2 class="card-title" data-t="howTitle"></h2>
+      <ol class="how">
+        <li data-t="how1"></li>
+        <li data-t="how2"></li>
+        <li data-t="how3"></li>
+      </ol>
+      <form id="handle-form" novalidate>
+        <label class="field-label" for="handle" data-t="handleLabel"></label>
+        <div class="field">
+          <span class="at">@</span>
+          <input id="handle" name="handle" type="text" inputmode="email" autocomplete="off"
+                 autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="80" required>
+        </div>
+        <p class="error" id="handle-error" role="alert" hidden></p>
+        <button class="btn btn-gold" type="submit" data-t="next"></button>
+      </form>
+    </section>
+
+    <!-- Крок 2: підписки -->
+    <section class="card step" id="step-follow" hidden>
+      <p class="hello"><span data-t="hello"></span>, <strong class="who"></strong></p>
+      <h2 class="card-title" data-t="followTitle"></h2>
+      <p class="hint" data-t="followHint"></p>
+      <ul class="accounts" id="accounts"></ul>
+      <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
+      <p class="progress-text" id="progress-text"></p>
+      <p class="error" id="register-error" role="alert" hidden></p>
+      <button class="btn btn-gold" type="button" id="get-number" disabled></button>
+      <button class="btn btn-link" type="button" id="change-handle" data-t="changeHandle"></button>
+    </section>
+
+    <!-- Крок 3: номер -->
+    <section class="card step ticket" id="step-number" hidden>
+      <p class="eyebrow" data-t="yourNumber"></p>
+      <p class="number"><span class="no">№</span><span id="number"></span></p>
+      <p class="who-big who"></p>
+      <p class="hint" id="already" hidden data-t="already"></p>
+      <p class="hint" data-t="screenshot"></p>
+      <p class="good" data-t="good"></p>
+      <button class="btn btn-link" type="button" id="another" data-t="anotherPerson"></button>
+    </section>
+
+    <footer class="foot">
+      <a href="https://www.instagram.com/rox.beauty.bar/" target="_blank" rel="noopener">@rox.beauty.bar</a>
+    </footer>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="i18n.js"></script>
+  <script src="handle.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
