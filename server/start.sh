@@ -7,7 +7,7 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 APP_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 RUN_DIR="$APP_DIR/../.konkurs-run"
 PORT=8787
-CHECK_EVERY=20
+CHECK_EVERY=15
 MAX_FAILED_CHECKS=3
 
 mkdir -p "$RUN_DIR"
@@ -17,10 +17,12 @@ if [ -f "$PID_FILE" ] && kill -0 "$(cat "$PID_FILE")" 2>/dev/null; then
   exit 0
 fi
 echo $$ > "$PID_FILE"
+[ -f "$RUN_DIR/supervisor.log" ] && mv "$RUN_DIR/supervisor.log" "$RUN_DIR/supervisor.prev.log"
 
 SERVER_PID=""
 TUNNEL_PID=""
 TUNNEL_URL=""
+HEALTHY_URL=""
 FAILED_CHECKS=0
 
 log() { echo "$(date '+%F %T') $*" >> "$RUN_DIR/supervisor.log"; }
@@ -57,7 +59,8 @@ publish_url() {
 start_tunnel() {
   local tunnel_log="$RUN_DIR/tunnel.log"
   : > "$tunnel_log"
-  cloudflared tunnel --no-autoupdate --url "http://127.0.0.1:$PORT" >> "$tunnel_log" 2>&1 &
+  # --config /dev/null: ignore ~/.cloudflared/config.yml of other projects (its ingress would 404 us)
+  cloudflared tunnel --config /dev/null --no-autoupdate --url "http://127.0.0.1:$PORT" >> "$tunnel_log" 2>&1 &
   TUNNEL_PID=$!
   TUNNEL_URL=""
   for _ in $(seq 1 60); do
@@ -92,6 +95,10 @@ while true; do
     start_tunnel
   elif tunnel_healthy; then
     FAILED_CHECKS=0
+    if [ "$HEALTHY_URL" != "$TUNNEL_URL" ]; then
+      HEALTHY_URL="$TUNNEL_URL"
+      log "healthy $TUNNEL_URL"
+    fi
   else
     FAILED_CHECKS=$((FAILED_CHECKS + 1))
     log "tunnel check failed ($FAILED_CHECKS/$MAX_FAILED_CHECKS)"
