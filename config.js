@@ -2,7 +2,7 @@
 window.RBB_CONFIG = Object.freeze({
   // URL веб-застосунку Google Apps Script (див. ІНСТРУКЦІЯ.md, крок 1).
   // Поки порожньо — сторінка працює в ДЕМО-режимі: номери зберігаються лише на цьому телефоні.
-  apiUrl: 'https://api.trycloudflare.com',
+  apiUrl: 'https://changed-trembl-hosting-based.trycloudflare.com',
 
   // Акаунти, на які треба підписатись. Порядок = порядок у списку.
   accounts: Object.freeze([
