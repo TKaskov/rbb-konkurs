@@ -100,6 +100,8 @@
       const from = angle;
       const begin = performance.now();
       return new Promise((resolve) => {
+        // rAF pauses in a background tab — never let the brake hang the flow.
+        const guard = setTimeout(resolve, BRAKE_MS + 300);
         function brake(now) {
           const t = Math.min(now - begin, BRAKE_MS);
           angle = from + SPEED * t - (SPEED * t * t) / (2 * BRAKE_MS);
@@ -107,6 +109,7 @@
           if (t < BRAKE_MS) {
             frameId = requestAnimationFrame(brake);
           } else {
+            clearTimeout(guard);
             resolve();
           }
         }

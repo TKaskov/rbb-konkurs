@@ -15,7 +15,8 @@
     root.append(canvas);
     document.body.append(root);
     document.documentElement.classList.add('fx-lock');
-    requestAnimationFrame(() => root.classList.add('is-open'));
+    void root.offsetWidth; // commit the start style so the fade-in runs
+    root.classList.add('is-open');
 
     function confetti(options) {
       if (!window.RBBConfetti) return Promise.resolve();
